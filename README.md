@@ -9,7 +9,7 @@
 
 # Funcionalidades 🛠
 * Acesso ao Aplicativo online [Aqui](https://bibliasapp.streamlit.app/)
-* Compatibilidade para todas plataformas utilizando o arquivo [Biblia.py](https://github.com/LucasFujarra/Biblia/blob/main/Biblia.py)
+* Compatibilidade para todas plataformas utilizando o arquivo [Biblia.py](https://github.com/LucasFujarra/Biblia/releases/latest)
 * Tradução de João Ferreira de Almeida
 * Consultas Ilimitadas
 * Interface  interativa e responsiva
@@ -29,4 +29,4 @@
 [<img src="https://miro.medium.com/v2/resize:fit:1400/0*5yINw4AB2CojpC0X.png" alt="Streamlit" height="80">](https://bibliasapp.streamlit.app/)
 
 # Download 💾
-[<img src="https://raw.githubusercontent.com/ismartcoding/plain-app/main/assets/get-it-on-github.png" alt="GitHub" height="80">](https://github.com/LucasFujarra/Biblia/blob/main/Biblia.py)
+[<img src="https://raw.githubusercontent.com/ismartcoding/plain-app/main/assets/get-it-on-github.png" alt="GitHub" height="80">](https://github.com/LucasFujarra/Biblia/releases/latest)
