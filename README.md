@@ -10,10 +10,15 @@
 # Funcionalidades 🛠
 * Acesso ao Aplicativo online [Aqui](https://bibliasapp.streamlit.app/)
 * Compatibilidade para todas plataformas utilizando o arquivo [Biblia.py](https://github.com/LucasFujarra/Biblia/releases/latest)
-* Tradução de João Ferreira de Almeida
+* Versão Almeida Revisada Imprensa Bíblica
+* Versão Almeida Corrigida e Revisada Fiel
+* Versão Almeida Revista e Corrigida
+* Versão King James Fiel
+* Versão Nova Versão Internacional
 * Consultas Ilimitadas
 * Interface  interativa e responsiva
 * Campos com filtro de capítulo e versículo
+* Campos com filtro de Versão
 
 # Screenshots 📷
 <div align="center">
