@@ -5,7 +5,7 @@
 </p>
 
 
-### A Bíblia Sagrada é um aplicativo criado em Python que utiliza a biblioteca Streamlit e a API bible-api. Com este aplicativo, você pode acessar todos os versículos e capítulos dos livros da Bíblia, utilizando a tradução de João Ferreira de Almeida.
+### A Bíblia Sagrada é um aplicativo criado em Python que utiliza a biblioteca Streamlit e a API MaatheusGois/bible. Com este aplicativo, você pode acessar todos os versículos e capítulos dos livros da Bíblia, utilizando várias versões diferentes.
 
 # Funcionalidades 🛠
 * Acesso ao Aplicativo online [Aqui](https://bibliasapp.streamlit.app/)
