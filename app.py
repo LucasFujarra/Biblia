@@ -1,4 +1,4 @@
-#---_ Bíblia Sagrada ✞ APP 1.0 _---
+#---_ Bíblia Sagrada ✞ App 2.0 _---
 #---_ By Lucas Fujarra _---
 #---_ https://github.com/LucasFujarra _---
 
@@ -7,87 +7,31 @@ import requests
 import streamlit as st
 
 def get_bible_text(book, chapter):
-    url = f"https://bible-api.com/{book}+{chapter}?translation=almeida"
+    url = f"https://raw.githubusercontent.com/MaatheusGois/bible/main/versions/pt-br/{selection}/{book}/{book}.json"
     response = requests.get(url)
     if response.status_code == 200:
-        data = json.loads(response.text)
-        verses = data['verses']
-        chapter_text = ""
-        for verse in verses:
-            chapter_text += f"{verse['verse']}: {verse['text']}\n"
-        return chapter_text
+        chapter = int(chapter) - 1
+        data = response.json()
+        chapter_text = data['chapters'][chapter]
+        formatted_text = ""
+        for verse_num, verse_text in enumerate(chapter_text, 1):
+            formatted_text += f"{verse_num}: {verse_text}\n"
+        return formatted_text
     else:
         return "Erro ao buscar o texto."
 
 
 def get_max_chapter(book):
     chapters = {
-        "Gênesis": 50,
-        "Êxodo": 40,
-        "Levítico": 27,
-        "Números": 36,
-        "Deuteronômio": 34,
-        "Josué": 24,
-        "Juízes": 21,
-        "Rute": 4,
-        "1 Samuel": 31,
-        "2 Samuel": 24,
-        "1 Reis": 22,
-        "2 Reis": 25,
-        "1 Crônicas": 29,
-        "2 Crônicas": 36,
-        "Esdras": 10,
-        "Neemias": 13,
-        "Ester": 10,
-        "Jó": 42,
-        "Salmos": 150,
-        "Provérbios": 31,
-        "Eclesiastes": 12,
-        "Cânticos": 8,
-        "Isaías": 66,
-        "Jeremias": 52,
-        "Lamentações": 5,
-        "Ezequiel": 48,
-        "Daniel": 12,
-        "Oseias": 14,
-        "Joel": 3,
-        "Amós": 9,
-        "Obadias": 1,
-        "Jonas": 4,
-        "Miqueias": 7,
-        "Naum": 3,
-        "Habacuque": 3,
-        "Sofonias": 3,
-        "Ageu": 2,
-        "Zacarias": 14,
-        "Malaquias": 4,
-        "Mateus": 28,
-        "Marcos": 16,
-        "Lucas": 24,
-        "João": 21,
-        "Atos": 28,
-        "Romanos": 16,
-        "1 Coríntios": 16,
-        "2 Coríntios": 13,
-        "Gálatas": 6,
-        "Efésios": 6,
-        "Filipenses": 4,
-        "Colossenses": 4,
-        "1 Tessalonicenses": 5,
-        "2 Tessalonicenses": 3,
-        "1 Timóteo": 6,
-        "2 Timóteo": 4,
-        "Tito": 3,
-        "Filemom": 1,
-        "Hebreus": 13,
-        "Tiago": 5,
-        "1 Pedro": 5,
-        "2 Pedro": 3,
-        "1 João": 5,
-        "2 João": 1,
-        "3 João": 1,
-        "Judas": 1,
-        "Apocalipse": 22
+        "gn": 50, "ex": 40, "lv": 27, "nm": 36, "dt": 34, "js": 24, "jud": 21, "rt": 4,
+        "1sm": 31, "2sm": 24, "1kgs": 22, "2kgs": 25, "1ch": 29, "2ch": 36, "ezr": 10,
+        "ne": 13, "et": 10, "job": 42, "ps": 150, "prv": 31, "ec": 12, "so": 8, "is": 66,
+        "jr": 52, "lm": 5, "ez": 48, "dn": 12, "ho": 14, "jl": 3, "am": 9, "ob": 1,
+        "jn": 4, "mi": 7, "na": 3, "hk": 3, "zp": 3, "hg": 2, "zc": 14, "ml": 4,
+        "mt": 28, "mk": 16, "lk": 24, "jo": 21, "act": 28, "rm": 16, "1co": 16,
+        "2co": 13, "gl": 6, "eph": 6, "ph": 4, "cl": 4, "1ts": 5, "2ts": 3, "1tm": 6,
+        "2tm": 4, "tt": 3, "phm": 1, "hb": 13, "jm": 5, "1pe": 5, "2pe": 3, "1jo": 5,
+        "2jo": 1, "3jo": 1, "jd": 1, "re": 22
     }
     return chapters.get(book, 0)
 
@@ -95,30 +39,76 @@ st.set_page_config(
     page_title="Bíblia Sagrada",
     page_icon="📖",
     layout="wide",
-        
 )
 
 st.title("Bíblia Sagrada ✞")
-st.markdown('''João Ferreira de Almeida''')
+
+
+options = ["aa", "acf", "arc", "kja","nvi" ]
+selection = st.pills("Versão", options, selection_mode="single",default= "nvi")
+
+if selection == "aa":
+    version_Name = "Almeida Revisada Imprensa Bíblica"
+elif selection == "acf":
+    version_Name = "Almeida Corrigida e Revisada Fiel"
+elif selection == "arc":
+    version_Name = "Almeida Revista e Corrigida"
+elif selection == "nvi":
+    version_Name = "Nova Versão Internacional"
+elif selection == "kja":
+    version_Name = "King James Fiel"
+else:
+    version_Name = ""
+
+st.markdown(f'''{version_Name}''')
 
 col1, col2 = st.columns(2)
 
 with col1:
-
-    book = st.selectbox(
-        " Escolha o Livro da Bíblia",
-        ("Gênesis", "Êxodo", "Levítico", "Números", "Deuteronômio", "Josué", "Juízes", "Rute", "1 Samuel", "2 Samuel", "1 Reis", "2 Reis", "1 Crônicas", "2 Crônicas", "Esdras", "Neemias", "Ester", "Jó", "Salmos", "Provérbios", "Eclesiastes", "Cânticos", "Isaías", "Jeremias", "Lamentações", "Ezequiel", "Daniel", "Oseias", "Joel", "Amós", "Obadias", "Jonas", "Miqueias", "Naum", "Habacuque", "Sofonias", "Ageu", "Zacarias", "Malaquias", "Mateus", "Marcos", "Lucas", "João", "Atos", "Romanos", "1 Coríntios", "2 Coríntios", "Gálatas", "Efésios", "Filipenses", "Colossenses", "1 Tessalonicenses", "2 Tessalonicenses", "1 Timóteo", "2 Timóteo", "Tito", "Filemom", "Hebreus", "Tiago", "1 Pedro", "2 Pedro", "1 João", "2 João", "3 João", "Judas", "Apocalipse"),
+    book_abbreviations = {
+        "Gênesis": "gn", "Êxodo": "ex", "Levítico": "lv", "Números": "nm", "Deuteronômio": "dt",
+        "Josué": "js", "Juízes": "jud", "Rute": "rt", "1 Samuel": "1sm", "2 Samuel": "2sm",
+        "1 Reis": "1kgs", "2 Reis": "2kgs", "1 Crônicas": "1ch", "2 Crônicas": "2ch", "Esdras": "ezr",
+        "Neemias": "ne", "Ester": "et", "Jó": "job", "Salmos": "ps", "Provérbios": "prv",
+        "Eclesiastes": "ec", "Cânticos": "so", "Isaías": "is", "Jeremias": "jr", "Lamentações": "lm",
+        "Ezequiel": "ez", "Daniel": "dn", "Oseias": "ho", "Joel": "jl", "Amós": "am", "Obadias": "ob",
+        "Jonas": "jn", "Miqueias": "mi", "Naum": "na", "Habacuque": "hk", "Sofonias": "zp",
+        "Ageu": "hg", "Zacarias": "zc", "Malaquias": "ml", "Mateus": "mt", "Marcos": "mk",
+        "Lucas": "lk", "João": "jo", "Atos": "act", "Romanos": "rm", "1 Coríntios": "1co",
+        "2 Coríntios": "2co", "Gálatas": "gl", "Efésios": "eph", "Filipenses": "ph", "Colossenses": "cl",
+        "1 Tessalonicenses": "1ts", "2 Tessalonicenses": "2ts", "1 Timóteo": "1tm", "2 Timóteo": "2tm",
+        "Tito": "tt", "Filemom": "phm", "Hebreus": "hb", "Tiago": "jm", "1 Pedro": "1pe",
+        "2 Pedro": "2pe", "1 João": "1jo", "2 João": "2jo", "3 João": "3jo", "Judas": "jd",
+        "Apocalipse": "re"
+    }
+    
+    book_name = st.selectbox(
+        "Escolha o Livro da Bíblia",
+        list(book_abbreviations.keys())
     )
+    book = book_abbreviations[book_name]
+
+if 'current_book' in st.session_state:
+    if st.session_state.current_book != book:
+        st.session_state.chapter = 1
+else:
+    st.session_state.current_book = book
+
+st.session_state.current_book = book
+
 
 with col2:
-
+    if 'chapter' not in st.session_state:
+        st.session_state.chapter = 1  
     max_chapters = get_max_chapter(book)
-    chapter = st.selectbox("Escolha o capítulo:", list(range(1, max_chapters + 1)))
+    chapter = st.selectbox("Escolha o capítulo:", list(range(1, max_chapters + 1)),index=st.session_state.chapter - 1)
 
 try:
     chapter = int(chapter)
-    text = get_bible_text(book.title(), chapter)
+    text = get_bible_text(book, chapter)
     st.text(text)
+    st.session_state.chapter = chapter
+    
 
 except ValueError:
     st.error("Por favor, insira um valor numérico válido para o capítulo.")
@@ -126,6 +116,30 @@ except Exception as e:
     st.error(f"Ocorreu um erro: {e}")
 
 
-    
+
+
+col1, col2,col3,col4,col5 = st.columns(5,gap="large",vertical_alignment="center")
+
+with col1:
+    if st.button("Capítulo Anterior"):
+        if st.session_state.chapter > 1:
+            st.session_state.chapter = st.session_state.chapter - 1
+            st.rerun()
+with col3:
+    st.text(f"Capítulo {chapter}")
+
+with col5:
+    if st.button("Próximo Capítulo"):
+        if st.session_state.chapter < max_chapters:
+            st.session_state.chapter = st.session_state.chapter + 1
+            st.rerun()
+        else:
+            st.success("Você chegou ao final do Livro")
+
+
+
+
+
+
 
 
