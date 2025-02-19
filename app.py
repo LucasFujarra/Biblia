@@ -118,7 +118,7 @@ except Exception as e:
 
 
 
-col1, col2,col3,col4,col5 = st.columns(5,gap="large",vertical_alignment="center")
+col1, col2,col3,col4,col5 = st.columns(5,gap="small",vertical_alignment="center")
 
 with col1:
     if st.button("Capítulo Anterior"):
