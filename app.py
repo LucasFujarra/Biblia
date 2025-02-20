@@ -121,7 +121,7 @@ except Exception as e:
 col1, col2,col3,col4,col5 = st.columns(5,gap="large",vertical_alignment="center")
 
 with col2:
-    if st.button("Capítulo Anterior"):
+    if st.button("◀"):
         if st.session_state.chapter > 1:
             st.session_state.chapter = st.session_state.chapter - 1
             st.rerun()
@@ -129,13 +129,12 @@ with col3:
     st.text(f"Capítulo {chapter}")
 
 with col4:
-    if st.button("Próximo Capítulo"):
+    if st.button("▶"):
         if st.session_state.chapter < max_chapters:
             st.session_state.chapter = st.session_state.chapter + 1
             st.rerun()
         else:
             st.success("Você chegou ao final do Livro")
-
 
 
 
